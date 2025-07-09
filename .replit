@@ -1,0 +1,31 @@
+
+[run]
+command = "python -m http.server 8080 --directory ."
+
+[packager]
+language = "web"
+
+[packager.features]
+packageSearch = true
+guessImports = false
+
+[languages.web]
+pattern = "**/*.{html,js,css,json}"
+
+[nix]
+channel = "stable-23.05"
+
+[gitHubImport]
+requiredFiles = [".replit", "replit.nix"]
+
+[deployment]
+run = ["python", "-m", "http.server", "8080", "--directory", "."]
+build = ""
+
+[[ports]]
+localPort = 8080
+externalPort = 80
+
+[env]
+REPL_NAME = "kutiva-biblioteca"
+REPL_LANGUAGE = "web"

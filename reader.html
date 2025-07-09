@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitura do Livro</title>
+    <link rel="stylesheet" href="/css/reader.css">
+</head>
+<body>
+    <div class="container">
+        <div class="pdf-viewer">
+            <h1 id="pdf-title"></h1>
+            <p id="pdf-text"></p>
+            <iframe id="pdf-frame" src="" width="100%" height="600px"></iframe>
+            <div class="buttons">
+                <button id="download-btn">
+                    <img src="/icon/download.png" alt="Baixar"> Baixar
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="/js/reader.js"></script>
+</body>
+</html>

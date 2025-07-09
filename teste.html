@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Educacional</title>
+    <link rel="stylesheet" href="/css/biblioteca.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <button class="menu-btn"><i class="fas fa-bars"></i></button>
+            <div class="search-bar">
+                <input type="text" placeholder="Pesquise pelo livro">
+                <i class="fas fa-search"></i>
+            </div>
+            <button class="filter-btn"><i class="fas fa-sliders-h"></i></button>
+        </div>
+        <div class="class-filter">
+            <select id="class-select">
+                <option value="">Selecione a classe</option>
+                <option value="1ª Classe">1ª Classe</option>
+                <option value="2ª Classe">2ª Classe</option>
+                <option value="3ª Classe">3ª Classe</option>
+                <option value="4ª Classe">4ª Classe</option>
+                <option value="5ª Classe">5ª Classe</option>
+                <option value="6ª Classe">6ª Classe</option>
+                <option value="7ª Classe">7ª Classe</option>
+                <option value="8ª Classe">8ª Classe</option>
+                <option value="9ª Classe">9ª Classe</option>
+                <option value="10ª Classe">10ª Classe</option>
+                <option value="11ª Classe">11ª Classe</option>
+                <option value="12ª Classe">12ª Classe</option>
+            </select>
+        </div>
+    </header>
+
+    <main>
+        <section class="results">
+            <h2>Resultados <span id="results-count">0 resultados</span></h2>
+            <div class="books-grid" id="books-grid">
+                <!-- Livros serão adicionados dinamicamente via JS -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active"><img src="/icon/pilha-de-livros.png" alt="Library"><span>BIBLIOTECA</span></a>
+            <a href="/categoria.html" class="nav-item"><img src="/icon/lupa.png" alt="Explore"><span>EXPLORAR</span></a>
+            <a href="#" class="nav-item"><img src="/icon/reeds.png" alt="Favourite"><span>LEITURAS</span></a>
+            <a href="/profile.html" class="nav-item"><img src="/icon/account.png" alt="Account"><span>PERFIL</span></a>
+        </nav>
+    </footer>
+
+ <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<script src="/js/biblioteca.js" type="module"></script>
+    
+</body>
+</html>

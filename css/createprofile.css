@@ -1,0 +1,267 @@
+:root {
+    --primary-color: #28a745;
+    --primary-light: #5cb85c;
+    --primary-dark: #218838;
+    --secondary-color: #f8f9fa;
+    --text-color: #343a40;
+    --light-gray: #e9ecef;
+    --medium-gray: #ced4da;
+    --white: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+.container {
+    width: 100%;
+    max-width: 420px;
+    padding: 30px;
+    background-color: var(--white);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--primary-color);
+    transition: transform 0.3s;
+}
+
+.back-btn:hover {
+    transform: translateX(-5px);
+    color: var(--primary-dark);
+}
+
+.title {
+    font-size: 26px;
+    color: var(--primary-color);
+    margin: 0 auto;
+    font-weight: 600;
+    text-align: center;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-picture-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.profile-picture {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--light-gray), var(--secondary-color));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.3s;
+}
+
+.profile-picture:hover {
+    transform: scale(1.05);
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-label {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(40, 167, 69, 0.8);
+    color: var(--white);
+    width: 100%;
+    text-align: center;
+    padding: 8px 0;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.upload-label:hover {
+    background-color: rgba(33, 136, 56, 0.9);
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-input, .form-select {
+    width: 100%;
+    padding: 14px 15px;
+    border: 2px solid var(--medium-gray);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: var(--secondary-color);
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
+
+.form-input:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    background-color: var(--white);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+}
+
+.form-select {
+    appearance: none;
+    background: url('data:image/svg+xml;utf8,<svg fill="%2328a745" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 15px center;
+    background-size: 20px;
+}
+
+.date-input {
+    padding-right: 50px;
+}
+
+.calendar-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.terms-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.terms-checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+.terms-label {
+    font-size: 14px;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.terms-label a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.terms-label a:hover {
+    text-decoration: underline;
+}
+
+.register-btn {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+.register-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+.register-btn:active {
+    transform: translateY(0);
+}
+
+/* Estilos para o datepicker */
+.ui-datepicker {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    width: 300px;
+}
+
+.ui-datepicker-header {
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.ui-datepicker-prev, .ui-datepicker-next {
+    cursor: pointer;
+    color: var(--white);
+    font-weight: bold;
+}
+
+.ui-datepicker-title {
+    font-weight: 600;
+}
+
+.ui-datepicker-calendar th {
+    color: var(--primary-color);
+    padding: 5px;
+}
+
+.ui-datepicker-calendar td {
+    text-align: center;
+    padding: 5px;
+}
+
+.ui-datepicker-calendar td a {
+    display: block;
+    padding: 5px;
+    border-radius: 5px;
+    transition: all 0.2s;
+}
+
+.ui-datepicker-calendar td a:hover {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.ui-datepicker-current-day a {
+    background: var(--primary-color);
+    color: var(--white);
+}

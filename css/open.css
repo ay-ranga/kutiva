@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.book-details {
+    display: flex;
+    gap: 20px;
+}
+
+.book-cover img {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.book-info {
+    flex: 1;
+}
+
+.book-info h1 {
+    font-size: 24px;
+    margin: 0 0 10px;
+}
+
+.book-info p {
+    color: #666;
+    margin: 5px 0;
+}
+
+.book-info h2 {
+    font-size: 18px;
+    margin: 20px 0 10px;
+}
+
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+#download-btn, #read-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#download-btn {
+    background-color: #ddd;
+    color: #333;
+}
+
+#read-btn {
+    background-color: #28a745;
+    color: #fff;
+}

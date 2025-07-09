@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kutiva - Criar Conta</title>
+    <link rel="stylesheet" href="/css/signup.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="/ico/signup.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo">
+                <h1>KUTIVA</h1>
+            </div>
+
+            <h2>Criar nova conta</h2>
+
+            <form id="signupForm">
+
+
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" required>
+                    <span class="password-toggle" id="togglePassword">Mostrar</span>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirm-password">Confirmar senha</label>
+                    <input type="password" id="confirm-password" required>
+                    <span class="password-toggle" id="toggleConfirmPassword">Mostrar</span>
+                </div>
+
+                <button type="submit" class="btn">Criar conta</button>
+            </form>
+
+            <div class="divider">
+                <span class="divider-text">ou</span>
+            </div>
+
+            <!-- Cadastro Social -->
+            <button type="button" id="google-signup-btn" class="social-btn google-btn">
+                <i class="fab fa-google"></i>
+                Cadastrar com Google
+            </button>
+
+            <button type="button" id="facebook-signup-btn" class="social-btn facebook-btn">
+                <i class="fab fa-facebook-f"></i>
+                Cadastrar com Facebook
+            </button>
+
+            <div class="login-link">
+                Já tem uma conta? <a href="/login">Faça login</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/signup.js"></script>
+</body>
+</html>

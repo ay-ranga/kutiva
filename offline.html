@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sem Conexão - KUTIVA</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #00a859;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        #target {
+            position: absolute;
+            width: 60px;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Parece que você está offline!</h1>
+    <p>Não se preocupe, você pode se divertir enquanto espera a conexão voltar.</p>
+    <h2>Clique no alvo para ganhar pontos!</h2>
+    <div id="score">Pontuação: 0</div>
+    <img id="target" src="icon/nonet.png" alt="Alvo">
+
+    <script>
+        let score = 0;
+
+        function showTarget() {
+            const target = document.getElementById('target');
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+
+            // Escolher posições aleatórias para o alvo
+            const x = Math.random() * (windowWidth - 60);
+            const y = Math.random() * (windowHeight - 60);
+            target.style.left = `${x}px`;
+            target.style.top = `${y}px`;
+            target.style.display = 'block';
+        }
+
+        function hideTarget() {
+            const target = document.getElementById('target');
+            target.style.display = 'none';
+        }
+
+        // Atualiza a pontuação ao clicar no alvo
+        function shoot() {
+            score++;
+            document.getElementById('score').innerText = `Pontuação: ${score}`;
+            hideTarget();
+            setTimeout(showTarget, 1000); // mostra um novo alvo após 1 segundo
+        }
+
+        document.getElementById('target').addEventListener('click', shoot);
+
+        // Inicia o jogo
+        setInterval(showTarget, 2000); // mostra o alvo a cada 2 segundos
+    </script>
+</body>
+</html>

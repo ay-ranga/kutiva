@@ -1,0 +1,25 @@
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://kutiva-biblioteca.replit.app/sitemap.xml
+
+# Principais páginas
+Allow: /index.html
+Allow: /biblioteca.html
+Allow: /login.html
+Allow: /signup.html
+Allow: /categoria.html
+
+# Recursos estáticos
+Allow: /css/
+Allow: /js/
+Allow: /icon/
+Allow: /img/
+
+# Bloquear arquivos de configuração
+Disallow: /.replit
+Disallow: /replit.nix
+Disallow: /back-end/
+Disallow: /.config/

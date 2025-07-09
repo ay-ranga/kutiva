@@ -1,0 +1,32 @@
+
+{
+  "name": "kutiva-biblioteca",
+  "version": "1.0.0",
+  "description": "Biblioteca Virtual Kutiva - Plataforma educacional interativa",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8080",
+    "dev": "python -m http.server 8080",
+    "build": "echo 'Build completed'",
+    "test": "echo 'Tests not configured yet'"
+  },
+  "keywords": [
+    "education",
+    "library",
+    "kutiva",
+    "books",
+    "learning"
+  ],
+  "author": "Kutiva Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kutiva/biblioteca"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0",
+    "python": ">=3.8.0"
+  }
+}

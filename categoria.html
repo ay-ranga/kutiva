@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorias - Kutiva Biblioteca Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/categoria.css">
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <button class="back-btn" id="backButton">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1 class="page-title">Categorias</h1>
+            <div class="header-actions">
+                <button class="search-btn" id="searchButton">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="search-container" id="searchContainer">
+            <input type="text" placeholder="Pesquisar categorias..." id="searchInput">
+            <button class="search-close" id="searchClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Carrossel Hero -->
+        <section class="hero-carousel" id="heroCarousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="assets/images/hero1.jpg" alt="Estudantes em sala de aula">
+                    <div class="carousel-caption">
+                        <h2>Kutiva Biblioteca Digital</h2>
+                        <p>Conhecimento para todos os estudantes de Moçambique</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="assets/images/hero2.jpg" alt="Livros e materiais didáticos">
+                    <div class="carousel-caption">
+                        <h2>Materiais Didáticos</h2>
+                        <p>Coleção completa para o ensino secundário</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="assets/images/hero3.jpg" alt="Estudantes usando tecnologia">
+                    <div class="carousel-caption">
+                        <h2>Acesso Digital</h2>
+                        <p>Disponível em qualquer dispositivo</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control prev" id="carouselPrev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-control next" id="carouselNext">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="carousel-indicators" id="carouselIndicators"></div>
+        </section>
+
+        <section class="categories-section">
+            <div class="section-header">
+                <h2><i class="fas fa-graduation-cap"></i> Ciclos do Ensino Secundário</h2>
+                <p>Selecione o ciclo para acessar os materiais correspondentes</p>
+            </div>
+
+            <div class="cycles-container">
+                <!-- Primeiro Ciclo -->
+                <a href="primeiro-ciclo.html" class="cycle-card" id="primeiro-ciclo">
+                    <div class="cycle-image">
+                        <img src="assets/images/primeiro-ciclo.jpg" alt="Primeiro Ciclo">
+                        <div class="cycle-badge">8ª - 10ª Classe</div>
+                    </div>
+                    <div class="cycle-content">
+                        <div class="cycle-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="cycle-info">
+                            <h3>Primeiro Ciclo</h3>
+                            <div class="cycle-stats">
+                                <span><i class="fas fa-book"></i> <span class="material-count">124</span> Materiais</span>
+                                <span><i class="fas fa-users"></i> <span class="student-count">2.5k</span> Estudantes</span>
+                            </div>
+                            <ul class="cycle-subjects">
+                                <li><i class="fas fa-check-circle"></i> Português</li>
+                                <li><i class="fas fa-check-circle"></i> Matemática</li>
+                                <li><i class="fas fa-check-circle"></i> Física</li>
+                                <li><i class="fas fa-check-circle"></i> +5 disciplinas</li>
+                            </ul>
+                        </div>
+                        <div class="cycle-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Segundo Ciclo -->
+                <a href="segundo-ciclo.html" class="cycle-card" id="segundo-ciclo">
+                    <div class="cycle-image">
+                        <img src="assets/images/segundo-ciclo.jpg" alt="Segundo Ciclo">
+                        <div class="cycle-badge">11ª - 12ª Classe</div>
+                    </div>
+                    <div class="cycle-content">
+                        <div class="cycle-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="cycle-info">
+                            <h3>Segundo Ciclo</h3>
+                            <div class="cycle-stats">
+                                <span><i class="fas fa-book"></i> <span class="material-count">89</span> Materiais</span>
+                                <span><i class="fas fa-users"></i> <span class="student-count">1.8k</span> Estudantes</span>
+                            </div>
+                            <ul class="cycle-subjects">
+                                <li><i class="fas fa-check-circle"></i> Biologia</li>
+                                <li><i class="fas fa-check-circle"></i> História</li>
+                                <li><i class="fas fa-check-circle"></i> Geografia</li>
+                                <li><i class="fas fa-check-circle"></i> +7 disciplinas</li>
+                            </ul>
+                        </div>
+                        <div class="cycle-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h4>Download Ilimitado</h4>
+                    <p>Baixe todos os materiais que precisar para seus estudos</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>Acesso Mobile</h4>
+                    <p>Acesse de qualquer dispositivo, mesmo offline</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Progresso</h4>
+                    <p>Acompanhe seu desenvolvimento acadêmico</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="bottom-nav">
+            <a href="/" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </a>
+            <a href="/categoria" class="nav-item active">
+                <i class="fas fa-book"></i>
+                <span>Categorias</span>
+            </a>
+            <a href="/favoritos" class="nav-item">
+                <i class="fas fa-heart"></i>
+                <span>Favoritos</span>
+            </a>
+            <a href="/perfil" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Perfil</span>
+            </a>
+        </div>
+    </footer>
+
+    <script src="js/categoria.js"></script>
+</body>
+</html>

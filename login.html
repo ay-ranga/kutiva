@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Kutiva</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --primary-light: #4caf50;
+            --primary-dark: #1b5e20;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --text-color: #333;
+            --error-color: #f44336;
+            --link-color: #1976d2;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .auth-container {
+            background-color: var(--white);
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo i {
+            font-size: 3rem;
+            color: var(--primary-color);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-container i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+        }
+
+        button:hover {
+            background-color: var(--primary-light);
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .auth-link {
+            color: var(--link-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            margin-top: 0.5rem;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .divider {
+            margin: 1.5rem 0;
+            border-top: 1px solid #eee;
+            text-align: center;
+            position: relative;
+        }
+
+        .divider-text {
+            background-color: var(--white);
+            padding: 0 10px;
+            position: relative;
+            top: -10px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .social-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .google-btn {
+            background-color: #db4437;
+            color: white;
+        }
+
+        .google-btn:hover {
+            background-color: #c23321;
+        }
+
+        .facebook-btn {
+            background-color: #3b5998;
+            color: white;
+        }
+
+        .facebook-btn:hover {
+            background-color: #2d4373;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="logo">
+            <i class="fas fa-book-open"></i>
+        </div>
+        <h1>Entrar na Plataforma</h1>
+
+        <!-- Formulário de Login -->
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="seu@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <div class="password-container">
+                    <input type="password" id="password" placeholder="Sua senha" required>
+                    <i class="fas fa-eye" id="toggle-password"></i>
+                </div>
+            </div>
+
+            <button type="submit" id="login-btn">Entrar</button>
+            <div id="login-error" class="error-message"></div>
+        </form>
+
+        <div class="divider">
+            <span class="divider-text">ou</span>
+        </div>
+
+        <!-- Login Social -->
+        <button type="button" id="google-login-btn" class="social-btn google-btn">
+            <i class="fab fa-google"></i>
+            Entrar com Google
+        </button>
+
+        <button type="button" id="facebook-login-btn" class="social-btn facebook-btn">
+            <i class="fab fa-facebook-f"></i>
+            Entrar com Facebook
+        </button>
+
+        <!-- Link para cadastro -->
+        <div class="auth-footer">
+            <span>Não tem uma conta? </span>
+            <a href="/signup" class="auth-link" id="register-link">Cadastre-se</a>
+        </div>
+
+        <!-- Link para recuperação de senha -->
+        <div class="auth-footer">
+            <a href="#" class="auth-link" id="forgot-password-link">Esqueceu sua senha?</a>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script src="/js/firebase-config.js"></script>
+    <script src="/js/api-config.js"></script>
+
+    <script>
+
+        // Mostrar/ocultar senha
+        document.getElementById('toggle-password').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this;
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+
+        // Login com email e senha
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorElement = document.getElementById('login-error');
+            const loginBtn = document.getElementById('login-btn');
+
+            errorElement.textContent = '';
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Entrando...';
+
+            try {
+                // Primeiro, tenta autenticar com Firebase
+                const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+
+                // Registra/atualiza usuário na API Kutiva
+                await registerUserInKutiva(user, 'email');
+
+                // Redireciona após login bem-sucedido
+                window.location.href = 'biblioteca.html';
+
+            } catch (error) {
+                handleAuthError(error, 'login-error');
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Entrar';
+            }
+        });
+
+        // Login com Google
+        document.getElementById('google-login-btn').addEventListener('click', async () => {
+            try {
+                const result = await firebase.auth().signInWithPopup(googleProvider);
+                const user = result.user;
+
+                // Registra usuário na API Kutiva
+                await registerUserInKutiva(user, 'google');
+
+                // Redireciona após login bem-sucedido
+                window.location.href = 'biblioteca.html';
+
+            } catch (error) {
+                handleAuthError(error, 'login-error');
+            }
+        });
+
+        // Login com Facebook
+        document.getElementById('facebook-login-btn').addEventListener('click', async () => {
+            try {
+                const result = await firebase.auth().signInWithPopup(facebookProvider);
+                const user = result.user;
+
+                // Registra usuário na API Kutiva
+                await registerUserInKutiva(user, 'facebook');
+
+                // Redireciona após login bem-sucedido
+                window.location.href = 'biblioteca.html';
+
+            } catch (error) {
+                handleAuthError(error, 'login-error');
+            }
+        });
+
+        // Função para registrar usuário na API Kutiva
+        async function registerUserInKutiva(user, loginType) {
+            try {
+                const userData = {
+                    email: user.email,
+                    username: user.email.split('@')[0],
+                    name: user.displayName ? user.displayName.split(' ')[0] : user.email.split('@')[0],
+                    surname: user.displayName ? user.displayName.split(' ').slice(1).join(' ') : '',
+                    login_type: loginType,
+                    provider_id: user.uid
+                };
+
+                // Se há foto de perfil, baixa e converte para File
+                if (user.photoURL) {
+                    const response = await fetch(user.photoURL);
+                    const blob = await response.blob();
+                    const file = new File([blob], 'avatar.jpg', { type: 'image/jpeg' });
+                    userData.avatar = file;
+                }
+
+                await window.kutivaAPI.registerUser(userData);
+
+                // Salva dados do usuário localmente
+                localStorage.setItem('kutivaUser', JSON.stringify({
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName,
+                    photoURL: user.photoURL,
+                    loginType: loginType
+                }));
+
+            } catch (error) {
+                console.error('Erro ao registrar usuário na API Kutiva:', error);
+                // Mesmo com erro na API, permite continuar com Firebase
+            }
+        }
+
+        // Redirecionar para cadastro
+        document.getElementById('register-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'signup.html'; // Crie esta página para cadastro
+        });
+
+        // Redirecionar para recuperação de senha
+        document.getElementById('forgot-password-link').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+
+            if (!email) {
+                showError('login-error', 'Por favor, insira seu email para redefinir a senha.');
+                return;
+            }
+
+            try {
+                await firebase.auth().sendPasswordResetEmail(email);
+                showError('login-error', `Email de redefinição enviado para ${email}`, false);
+            } catch (error) {
+                handleAuthError(error, 'login-error');
+            }
+        });
+
+        // Funções auxiliares
+        function showError(elementId, message, isError = true) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.color = isError ? 'var(--error-color)' : 'var(--primary-color)';
+        }
+
+        function handleAuthError(error, elementId) {
+            console.error('Erro de autenticação:', error);
+
+            let errorMessage = 'Ocorreu um erro. Tente novamente.';
+
+            switch (error.code) {
+                case 'auth/invalid-email':
+                    errorMessage = 'Email inválido.';
+                    break;
+                case 'auth/user-disabled':
+                    errorMessage = 'Esta conta foi desativada.';
+                    break;
+                case 'auth/user-not-found':
+                    errorMessage = 'Nenhuma conta encontrada com este email.';
+                    break;
+                case 'auth/wrong-password':
+                    errorMessage = 'Senha incorreta. Tente novamente.';
+                    break;
+                case 'auth/too-many-requests':
+                    errorMessage = 'Muitas tentativas. Tente mais tarde.';
+                    break;
+            }
+
+            showError(elementId, errorMessage);
+        }
+
+        // Verifica se usuário já está logado
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                console.log('Usuário já autenticado, redirecionando para biblioteca...');
+                setTimeout(() => {
+                    window.location.href = 'biblioteca.html';
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>

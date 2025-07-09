@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificações</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #fff;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, green 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header .back-arrow {
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .header .back-arrow:hover {
+            transform: scale(1.1);
+        }
+
+        .header .title {
+            font-size: 20px;
+            font-weight: 600;
+            flex: 1;
+            text-align: center;
+            margin: 0 20px;
+        }
+
+        .header .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notification-badge {
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 80px;
+            z-index: 40;
+        }
+
+        .tab {
+            padding: 15px 10px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            color: #666;
+        }
+
+        .tab:hover {
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        /* Notification List */
+        .notification-list {
+            padding: 20px;
+            padding-bottom: 40px;
+            min-height: calc(100vh - 160px);
+        }
+
+        .notification-item {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notification-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .notification-item.unread {
+            border-left-color: #ff4757;
+            background: linear-gradient(135deg, #fff 0%, #fff5f5 100%);
+        }
+
+        .notification-item.unread::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-top: 20px solid #ff4757;
+        }
+
+        .notification-item.unread::after {
+            content: '●';
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            color: white;
+            font-size: 8px;
+        }
+
+        .notification-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .notification-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .notification-icon.announcement {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .notification-icon.campaign {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+        }
+
+        .notification-icon.communication {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .notification-description {
+            font-size: 14px;
+            color: #7f8c8d;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .notification-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #95a5a6;
+        }
+
+        .notification-tag {
+            background: #ecf0f1;
+            color: #34495e;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .notification-tag.announcement {
+            background: #e8f4fd;
+            color: #667eea;
+        }
+
+        .notification-tag.campaign {
+            background: #e8f8f5;
+            color: #2ecc71;
+        }
+
+        .notification-tag.communication {
+            background: #fdf2f2;
+            color: #e74c3c;
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #ecf0f1;
+            border-left: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+
+        .empty-state i {
+            font-size: 60px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        /* Modal Atualizado */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal.show {
+            display: flex;
+            animation: modalFadeIn 0.4s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { 
+                transform: translateY(40px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Header do Modal com Imagem */
+        .modal-header {
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, green(118, 75, 162, 0.8) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 25px;
+            color: white;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: white;
+            opacity: 0.9;
+            transition: all 0.2s ease;
+            background: rgba(0,0,0,0.3);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+            background: rgba(0,0,0,0.5);
+            transform: scale(1.1);
+        }
+
+        .modal-category {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            align-self: flex-start;
+            margin-bottom: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.3;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .modal-subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Corpo do Modal */
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-description {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+
+        /* Informações Detalhadas */
+        .modal-details {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-size: 14px;
+            color: #6c757d;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            color: #2c3e50;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        /* Tags e Status */
+        .modal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: #e9ecef;
+            color: #495057;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .tag.priority-high {
+            background: #fee;
+            color: #dc3545;
+        }
+
+        .tag.priority-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .tag.priority-low {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        /* Ações do Modal */
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            padding: 0 30px 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        /* Status Indicator */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-indicator.active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-indicator.urgent {
+            background: #fee;
+            color: #dc3545;
+        }
+
+        .status-indicator.completed {
+            background: #cce5ff;
+            color: #0066cc;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .notification-item {
+                margin: 0 -10px 15px -10px;
+                border-radius: 0;
+            }
+            
+            .modal-content {
+                margin: 10px;
+                border-radius: 20px;
+                max-height: 90vh;
+            }
+
+            .modal-title {
+                font-size: 20px;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="back-arrow" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div class="title">Notificações</div>
+            <div class="status">
+                <div class="notification-badge" id="notificationBadge">0</div>
+                <i class="fas fa-bell"></i>
+            </div>
+        </header>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="filterNotifications('all')" data-type="all">TODAS</div>
+            <div class="tab" onclick="filterNotifications('announcement')" data-type="announcement">ANÚNCIOS</div>
+            <div class="tab" onclick="filterNotifications('campaign')" data-type="campaign">CAMPANHAS</div>
+            <div class="tab" onclick="filterNotifications('communication')" data-type="communication">COMUNICADOS</div>
+        </div>
+
+        <!-- Notification List -->
+        <div class="notification-list" id="notificationContainer">
+            <div class="loading" id="loadingState">
+                <div class="spinner"></div>
+                <span>Carregando notificações...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Aprimorado -->
+    <div class="modal" id="notificationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img id="modalImage" src="" alt="Notificação" class="modal-image">
+                <div class="modal-image-overlay">
+                    <span class="modal-close" onclick="closeModal()">&times;</span>
+                    <div class="modal-category" id="modalCategory"></div>
+                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <p class="modal-subtitle" id="modalSubtitle"></p>
+                </div>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-description" id="modalDescription"></div>
+                
+                <div class="modal-tags" id="modalTags"></div>
+                
+                <div class="modal-details">
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            <i class="fas fa-calendar"></i>
+                            Data de Publicação
+                        </div>
+                        <div class="detail-value" id="modalDate"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            <i class="fas fa-clock"></i>
+                            Horário
+                        </div>
+                        <div class="detail-value" id="modalTime"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            <i class="fas fa-info-circle"></i>
+                            Status
+                        </div>
+                        <div class="detail-value">
+                            <span class="status-indicator" id="modalStatus"></span>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            <i class="fas fa-user"></i>
+                            Autor
+                        </div>
+                        <div class="detail-value" id="modalAuthor"></div>
+                    </div>
+                    <div class="detail-row" id="modalLocationRow" style="display: none;">
+                        <div class="detail-label">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Local
+                        </div>
+                        <div class="detail-value" id="modalLocation"></div>
+                    </div>
+                    <div class="detail-row" id="modalDeadlineRow" style="display: none;">
+                        <div class="detail-label">
+                            <i class="fas fa-hourglass-end"></i>
+                            Prazo
+                        </div>
+                        <div class="detail-value" id="modalDeadline"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="shareNotification()">
+                    <i class="fas fa-share"></i>
+                    Compartilhar
+                </button>
+                <button class="btn btn-primary" id="modalPrimaryAction" onclick="handlePrimaryAction()">
+                    <i class="fas fa-external-link-alt"></i>
+                    Ver Mais
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuração da API
+        const API_BASE_URL = '/api';
+        
+        // Estado da aplicação
+        let notifications = [];
+        let currentFilter = 'all';
+        let isLoading = false;
+        let currentNotification = null;
+
+        // Elementos DOM
+        const notificationContainer = document.getElementById('notificationContainer');
+        const loadingState = document.getElementById('loadingState');
+        const modal = document.getElementById('notificationModal');
+        const notificationBadge = document.getElementById('notificationBadge');
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNotifications();
+            setupEventListeners();
+        });
+
+        // Event Listeners
+        function setupEventListeners() {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.classList.contains('show')) {
+                    closeModal();
+                }
+            });
+        }
+
+        // Carregar notificações da API
+        async function loadNotifications() {
+            try {
+                showLoading(true);
+                
+                const response = await fetch(`${API_BASE_URL}/notifications`);
+                
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar notificações');
+                }
+                
+                const data = await response.json();
+                notifications = data.notifications || [];
+                
+            } catch (error) {
+                console.warn('API não disponível, usando dados de exemplo:', error);
+                notifications = getExampleNotifications();
+            } finally {
+                showLoading(false);
+                renderNotifications();
+                updateNotificationBadge();
+            }
+        }
+
+        // Dados de exemplo aprimorados
+        function getExampleNotifications() {
+            return [
+                {
+                    id: 1,
+                    type: 'announcement',
+                    title: 'Novo Curso de Desenvolvimento Sustentável',
+                    description: 'Acabamos de lançar um curso completo sobre Desenvolvimento Sustentável que aborda práticas ecológicas modernas, tecnologias verdes e como implementá-las em projetos reais. O curso inclui 40 horas de conteúdo, certificado reconhecido e projetos práticos para seu portfólio.',
+                    image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=300&fit=crop',
+                    date: new Date().toISOString(),
+                    status: 'Ativo',
+                    author: 'Equipe Acadêmica',
+                    priority: 'high',
+                    location: 'Online',
+                    deadline: '2024-07-15',
+                    tags: ['Curso', 'Certificação', 'Sustentabilidade'],
+                    actionText: 'Inscrever-se',
+                    actionUrl: '#inscricao',
+                    read: false
+                },
+                {
+                    id: 2,
+                    type: 'campaign',
+                    title: 'Grande Campanha de Reflorestamento 2024',
+                    description: 'Participe da nossa maior campanha de plantio de árvores do ano! Vamos plantar mais de 1.000 mudas nativas no Parque Ecológico Central. O evento incluirá workshops sobre conservação, atividades para crianças e um lanche comunitário. Traga sua família e amigos para construir um futuro mais verde juntos.',
+                    image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=300&fit=crop',
+                    date: new Date(Date.now() - 86400000).toISOString(),
+                    status: 'Inscrições Abertas',
+                    author: 'ONG Verde Vida',
+                    priority: 'medium',
+                    location: 'Parque Ecológico Central',
+                    deadline: '2024-06-20',
+                    tags: ['Voluntariado', 'Meio Ambiente', 'Comunidade'],
+                    actionText: 'Participar',
+                    actionUrl: '#participar',
+                    read: true
+                },
+                {
+                    id: 3,
+                    type: 'communication',
+                    title: 'Manutenção Programada do Sistema',
+                    description: 'Informamos que realizaremos uma manutenção programada em nossos servidores para implementar importantes atualizações de segurança e melhorias de performance. Durante este período, alguns serviços podem ficar temporariamente indisponíveis. Agradecemos sua compreensão.',
+                    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=300&fit=crop',
+                    date: new Date(Date.now() - 172800000).toISOString(),
+                    status: 'Urgente',
+                    author: 'Equipe Técnica',
+                    priority: 'high',
+                    deadline: '2024-06-08 02:00',
+                    tags: ['Manutenção', 'Sistema', 'Importante'],
+                    actionText: 'Entendi',
+                    actionUrl: '#',
+                    read: false
+                },
+                {
+                    id: 4,
+                    type: 'announcement',
+                    title: 'Resultado do Concurso de Redação Ambiental',
+                    description: 'Com grande alegria, anunciamos os vencedores do concurso de redação "Meio Ambiente e Futuro Sustentável". Recebemos mais de 300 participações incríveis de estudantes de todo o país. Os textos demonstraram criatividade, consciência ambiental e propostas inovadoras para um futuro melhor.',
+                    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=300&fit=crop',
+                    date: new Date(Date.now() - 259200000).toISOString(),
+                    status: 'Finalizado',
+                    author: 'Comissão Julgadora',
+                    priority: 'low',
+                    tags: ['Concurso', 'Educação', 'Premiação'],
+                    actionText: 'Ver Vencedores',
+                    actionUrl: '#vencedores',
+                    read: true
+                },
+                {
+                    id: 5,
+                    type: 'campaign',
+                    title: 'Sistema Inteligente de Coleta Seletiva',
+                    description: 'Revolucione sua forma de reciclar! A partir do próximo mês, implementaremos um sistema inovador de coleta seletiva com QR codes e gamificação em todas as nossas unidades. O novo sistema permitirá rastreamento em tempo real, pontuação para reciclagem e prêmios sustentáveis.',
+                    image: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=600&h=300&fit=crop',
+                    date: new Date(Date.now() - 345600000).toISOString(),
+                    status: 'Em Breve',
+                    author: 'Equipe de Inovação',
+                    priority: 'medium',
+                    deadline: '2024-07-01',
+                    tags: ['Inovação', 'Reciclagem', 'Tecnologia'],
+                    actionText: 'Saiba Mais',
+                    actionUrl: '#coleta',
+                    read: false
+                }
+            ];
+        }
+
+        // Mostrar/ocultar loading
+        function showLoading(show) {
+            isLoading = show;
+            loadingState.style.display = show ? 'flex' : 'none';
+        }
+
+        // Renderizar notificações
+        function renderNotifications() {
+            if (isLoading) return;
+
+            const filteredNotifications = currentFilter === 'all' 
+                ? notifications 
+                : notifications.filter(n => n.type === currentFilter);
+
+            if (filteredNotifications.length === 0) {
+                notificationContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-bell-slash"></i>
+                        <h3>Nenhuma notificação encontrada</h3>
+                        <p>Não há notificações para exibir no momento.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            notificationContainer.innerHTML = filteredNotifications
+                .map(notification => createNotificationHTML(notification))
+                .join('');
+        }
+
+        // Criar HTML da notificação
+        function createNotificationHTML(notification) {
+            const iconMap = {
+                'announcement': 'fas fa-bullhorn',
+                'campaign': 'fas fa-seedling',
+                'communication': 'fas fa-exclamation-circle'
+            };
+
+            const typeLabels = {
+                'announcement': 'Anúncio',
+                'campaign': 'Campanha',
+                'communication': 'Comunicado'
+            };
+
+            const formatDate = (dateString) => {
+                const date = new Date(dateString);
+                const now = new Date();
+                const diffTime = Math.abs(now - date);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                if (diffDays === 1) return 'Hoje';
+                if (diffDays === 2) return 'Ontem';
+                if (diffDays <= 7) return `${diffDays - 1} dias atrás`;
+                return date.toLocaleDateString('pt-BR');
+            };
+
+            return `
+                <div class="notification-item ${notification.read ? '' : 'unread'}" 
+                     onclick="openModal(${notification.id})" 
+                     data-id="${notification.id}">
+                    <div class="notification-header">
+                        <div class="notification-icon ${notification.type}">
+                            <i class="${iconMap[notification.type]}"></i>
+                        </div>
+                        <div class="notification-content">
+                            <h3 class="notification-title">${notification.title}</h3>
+                            <p class="notification-description">${notification.description.substring(0, 120)}${notification.description.length > 120 ? '...' : ''}</p>
+                        </div>
+                    </div>
+                    <div class="notification-meta">
+                        <span>${formatDate(notification.date)}</span>
+                        <span class="notification-tag ${notification.type}">${typeLabels[notification.type]}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Filtrar notificações
+        function filterNotifications(type, element) {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            if (!element) {
+                element = document.querySelector(`[data-type="${type}"]`);
+            }
+            
+            if (element) {
+                element.classList.add('active');
+            }
+
+            currentFilter = type;
+            renderNotifications();
+        }
+
+        // Abrir modal aprimorado
+        async function openModal(notificationId) {
+            const notification = notifications.find(n => n.id === notificationId);
+            if (!notification) return;
+
+            currentNotification = notification;
+
+            // Marcar como lida
+            if (!notification.read) {
+                await markAsRead(notificationId);
+            }
+
+            // Configurar imagem
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = notification.image || 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&h=300&fit=crop';
+            modalImage.alt = notification.title;
+
+            // Configurar categoria e tipo
+            const typeLabels = {
+                'announcement': 'Anúncio Importante',
+                'campaign': 'Campanha Ativa',
+                'communication': 'Comunicado Oficial'
+            };
+
+            document.getElementById('modalCategory').textContent = typeLabels[notification.type];
+            document.getElementById('modalTitle').textContent = notification.title;
+            document.getElementById('modalSubtitle').textContent = `Por ${notification.author}`;
+            document.getElementById('modalDescription').textContent = notification.description;
+
+            // Configurar detalhes
+            const notificationDate = new Date(notification.date);
+            document.getElementById('modalDate').textContent = notificationDate.toLocaleDateString('pt-BR');
+            document.getElementById('modalTime').textContent = notificationDate.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('modalAuthor').textContent = notification.author;
+
+            // Configurar status
+            const statusElement = document.getElementById('modalStatus');
+            statusElement.textContent = notification.status;
+            statusElement.className = `status-indicator ${notification.status.toLowerCase().includes('urgente') ? 'urgent' : 
+                                                          notification.status.toLowerCase().includes('ativo') ? 'active' : 'completed'}`;
+
+            // Configurar campos opcionais
+            if (notification.location) {
+                document.getElementById('modalLocation').textContent = notification.location;
+                document.getElementById('modalLocationRow').style.display = 'flex';
+            } else {
+                document.getElementById('modalLocationRow').style.display = 'none';
+            }
+
+            if (notification.deadline) {
+                document.getElementById('modalDeadline').textContent = new Date(notification.deadline).toLocaleDateString('pt-BR');
+                document.getElementById('modalDeadlineRow').style.display = 'flex';
+            } else {
+                document.getElementById('modalDeadlineRow').style.display = 'none';
+            }
+
+            // Configurar tags
+            const tagsContainer = document.getElementById('modalTags');
+            if (notification.tags && notification.tags.length > 0) {
+                tagsContainer.innerHTML = notification.tags.map(tag => 
+                    `<span class="tag ${notification.priority ? `priority-${notification.priority}` : ''}">${tag}</span>`
+                ).join('');
+                
+                // Adicionar tag de prioridade se existir
+                if (notification.priority) {
+                    const priorityLabels = { high: 'Alta Prioridade', medium: 'Prioridade Média', low: 'Baixa Prioridade' };
+                    tagsContainer.innerHTML += `<span class="tag priority-${notification.priority}">${priorityLabels[notification.priority]}</span>`;
+                }
+            } else {
+                tagsContainer.innerHTML = '';
+            }
+
+            // Configurar botão de ação
+            const primaryButton = document.getElementById('modalPrimaryAction');
+            primaryButton.innerHTML = `<i class="fas fa-external-link-alt"></i> ${notification.actionText || 'Ver Mais'}`;
+
+            // Mostrar modal
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fechar modal
+        function closeModal() {
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+            currentNotification = null;
+        }
+
+        // Marcar como lida
+        async function markAsRead(notificationId) {
+            try {
+                await fetch(`${API_BASE_URL}/notifications/${notificationId}/read`, {
+                    method: 'PATCH'
+                });
+
+                const notification = notifications.find(n => n.id === notificationId);
+                if (notification) {
+                    notification.read = true;
+                    renderNotifications();
+                    updateNotificationBadge();
+                }
+            } catch (error) {
+                console.warn('Erro ao marcar como lida:', error);
+                const notification = notifications.find(n => n.id === notificationId);
+                if (notification) {
+                    notification.read = true;
+                    renderNotifications();
+                    updateNotificationBadge();
+                }
+            }
+        }
+
+        // Atualizar badge
+        function updateNotificationBadge() {
+            const unreadCount = notifications.filter(n => !n.read).length;
+            notificationBadge.textContent = unreadCount;
+            notificationBadge.style.display = unreadCount > 0 ? 'flex' : 'none';
+        }
+
+        // Ações do modal
+        function shareNotification() {
+            if (currentNotification && navigator.share) {
+                navigator.share({
+                    title: currentNotification.title,
+                    text: currentNotification.description,
+                    url: window.location.href
+                }).catch(console.error);
+            } else {
+                // Fallback para navegadores sem Web Share API
+                navigator.clipboard.writeText(`${currentNotification.title}\n\n${currentNotification.description}`);
+                alert('Conteúdo copiado para a área de transferência!');
+            }
+        }
+
+        function handlePrimaryAction() {
+            if (currentNotification && currentNotification.actionUrl && currentNotification.actionUrl !== '#') {
+                window.open(currentNotification.actionUrl, '_blank');
+            } else {
+                closeModal();
+            }
+        }
+
+        // Voltar
+        function goBack() {
+            window.history.back();
+        }
+
+        // Refresh automático
+        setInterval(() => {
+            if (!modal.classList.contains('show')) {
+                loadNotifications();
+            }
+        }, 30000);
+    </script>
+</body>
+</html>

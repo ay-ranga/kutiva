@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar</title>
+    <link rel="stylesheet" href="css/createprofile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i></button>
+            <h1 class="title">Kutiva | Criar Perfil</h1>
+        </header>
+        <form class="register-form" id="registerForm">
+            <div class="profile-picture-section">
+                <div class="profile-picture" id="profilePicture">
+                    <img src="/icon/user.png" alt="Profile Picture" class="profile-img" id="profileImg">
+                    <label for="profileUpload" class="upload-label"><i class="fas fa-camera"></i> Adicionar foto</label>
+                </div>
+                <input type="file" id="profileUpload" class="profile-upload" accept="/icon/*" hidden>
+            </div>
+            <div class="form-group">
+                <input type="text" id="fullName" class="form-input" placeholder="Nome completo" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="birthDate" class="form-input date-input" placeholder="Data de Nascimento" required readonly>
+                <span class="calendar-icon" id="calendarIcon"><i class="far fa-calendar-alt"></i></span>
+            </div>
+            <div class="form-group">
+                <select id="gender" class="form-select" required>
+                    <option value="" disabled selected>Selecione o gênero</option>
+                    <option value="male">Masculino</option>
+                    <option value="female">Feminino</option>
+                   
+                    <option value="prefer-not-to-say">Prefiro não dizer</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select id="class" class="form-select" required>
+                    <option value="" disabled selected>Selecione a classe</option>
+                    <option value="1class">1ª Classe</option>
+                    <option value="2class">2ª Casse</option>
+                    <option value="3class">3ª Classe</option>
+                    <option value="4class">4ª Classe</option>
+                    <option value="5class">5ª Classe</option>
+                    <option value="6class">6ª Casse</option>
+                    <option value="7class">7ª Classe</option>
+                    <option value="8class">8ª Classe</option>
+                    <option value="9class">9ª Classe</option>
+                    <option value="10class">10ª Casse</option>
+                    <option value="11class">11ª Classe</option>
+                    <option value="12class">12ª Classe</option>
+                </select>
+            </div>
+            <div class="terms-group">
+                <input type="checkbox" id="terms" class="terms-checkbox" required>
+                <label for="terms" class="terms-label">Eu concordo com os <a href="#">Termos e Condições</a> e <a href="#">Política de Privacidade</a></label>
+            </div>
+            <button type="submit" class="register-btn" id="registerBtn">Cadastrar</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+   <script src="js/createprofile.js"></script>
+</body>
+</html>
